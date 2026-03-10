@@ -9,7 +9,6 @@ void moveCursor(int x,int y)
 
 int main()
 {
-	
 	moveCursor(20, 10);
 	printf("%%I love pork\\\ttab\n\"Also sogogi\"");
 	return 0;
