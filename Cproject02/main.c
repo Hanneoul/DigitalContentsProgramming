@@ -1,15 +1,28 @@
 #include <stdio.h>
 
-void moveCursor(int x,int y)
+int move_cursor(int x, int y)
 {
-	/* ＡＮＳＩ 코드 ： \033[<row>;<col>H  */
-	printf("\033[%d;%dH",y, x);  // 10행 20열로 커서 이동 후 출력	
-	return;
+	/* ANSI Escape Sequence
+	* 커서의 이동 : \033[<row>;<col>H
+	*/
+	printf("\033[%d;%dH", y, x);	//printf : print function
+	return 0;
 }
 
 int main()
 {
-	moveCursor(20, 10);
-	puts("%%I love pork\\\ttab\n\"Also sogogi\"");
+	move_cursor(5, 5);
+	puts("Cursor is Moved!!!");
+
+	/* Escape Sequence example
+	* \n : 엔터 (줄바꿈)
+	* \\ : '\' 백슬래시 문자 입력
+	* \" : '"' 따옴표 문자 입력
+	* \' : 작은따옴표 문자 입력
+	* \t : 탭
+	* \b : backspace
+	* ...
+	*/
+	puts("\n\n\n\" Escape Sequence Sample \" ");
 	return 0;
 }
