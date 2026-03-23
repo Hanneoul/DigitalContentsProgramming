@@ -27,5 +27,7 @@ int main()
 		move_cursor(x, y);
 		printf("*");
 	}
+	printf("%c", a);
+
 	return 0;
 }
