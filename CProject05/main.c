@@ -1,18 +1,39 @@
+/*
+ * [배경지식 요약]
+ * 1. <windows.h> : 윈도우 운영체제에서 제공하는 다양한 기능(시간 지연, 화면 제어 등)을 담은 도구함임.
+ * 2. Sleep(ms) : 프로그램을 잠시 멈추는 함수임. 단위는 밀리초(ms)이며, 1000ms가 1초임.
+ * - 이 함수는 <windows.h> 라이브러리에 포함되어 있음.
+ * 3. system("cls") : 터미널 화면을 깨끗하게 지우는(Clear Screen) 명령임.
+ * - 매번 화면을 지우고 다시 그려서 글자가 움직이거나 변하는 것처럼 보이게 함.
+ * 4. 반복문 (while) : 조건이 참(True)인 동안 중괄호 { } 안의 내용을 계속 실행함.
+ * 5. 변수 업데이트 (iterator = iterator + 1) : 기존 값에 1을 더해 다시 저장함.
+ * - 반복 횟수를 세거나 조건을 탈출하기 위해 필수적임.
+ */
+
 #include <stdio.h>
-#include <windows.h>	//윈도우32 라이브러리
+#include <windows.h> // 윈도우 전용 기능(Sleep 등)을 사용하기 위해 포함함
 
 int main()
 {
-	int iterator = 0;
+    // 반복 횟수를 저장할 변수를 0으로 초기화함
+    int iterator = 0;
 
-	//반복문 : while (조건) { 반복내용 }
-	while (iterator < 10)
-	{
-		system("cls");	//시스템 명령어를 사용한다 system(명령어 문자열)
-		printf("오늘 점심메뉴 알려줘 %d초 준다.\n", 10 - iterator);
-		iterator = iterator + 1;
-		Sleep(1000);	//ms 단위로 쉰다. : Sleep(ms)
-	}
+    // iterator가 10보다 작은 동안(0~9) 중괄호 안의 내용을 반복함
+    while (iterator < 10)
+    {
+        // 1. 화면 지우기: 이전 출력 내용을 삭제하여 깔끔하게 만듦
+        system("cls");
 
-	return 0;
+        // 2. 메시지 출력: 10에서 현재 반복 횟수를 빼서 남은 초를 보여줌
+        printf("오늘 점심메뉴 알려줘 %d초 준다.\n", 10 - iterator);
+
+        // 3. 값 증가: 반복 횟수를 1 늘림 (이게 없으면 무한 루프에 빠짐)
+        iterator = iterator + 1;
+
+        // 4. 대기: 1000밀리초(1초) 동안 프로그램을 멈춤
+        // <windows.h>가 있어야 이 기능을 사용할 수 있음
+        Sleep(1000);
+    }
+
+    return 0;
 }
