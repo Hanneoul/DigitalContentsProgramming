@@ -17,7 +17,7 @@
  // 커서 위치를 (x, y) 좌표로 이동시키는 함수 정의
 int move_cursor(int x, int y)
 {
-    /* * \033은 8진수로 ASCII의 ESC(Escape) 문자를 의미함.
+    /* * \033은 8진수로 ANSI의 ESC(Escape) 문자를 의미함.
      * [%d;%dH 형식은 터미널에게 "커서를 y행 x열로 옮겨라"라고 명령하는 표준 규격임.
      */
     printf("\033[%d;%dH", y, x);
