@@ -9,6 +9,8 @@
 #define BG_COLOR_RED 41
 #define FONT_COLOR_GREEN 32
 #define BG_COLOR_GREEN 42
+#define FONT_COLOR_YELLOW 33
+#define BG_COLOR_YELLOW 43
 #define FONT_COLOR_BLUE 34
 #define BG_COLOR_BLUE 44
 #define FONT_COLOR_MAGENTA 35
@@ -78,27 +80,36 @@ int main()
 
 	while (isRunning)
 	{
-		move_cursor(50, 10);
+		
 		set_color(BG_COLOR_BRIGHTMAGENTA);
 		set_color(FONT_COLOR_WHITE);
-
-		printf("임서진의 첫사랑");
+		move_cursor(50, 9);
+		printf("                     ");
+		move_cursor(50, 10);
+		printf(" ♥ 임서진의 첫사랑 ♥ ");
+		move_cursor(50, 11);
+		printf("                     ");
 
 		set_color(BG_COLOR_BLACK);
 		
 
-		move_cursor(51, 13);
-		printf("1. 게임  시작");
+		move_cursor(52, 13);
+		printf("  1. 게임  시작  ");
 
-		move_cursor(51, 15);
-		printf("2. 게임  종료");
+		move_cursor(52, 15);
+		printf("  2. 만든  사람  ");
+		
+		set_color(BG_COLOR_YELLOW);
+		move_cursor(52, 17);
+		printf("  3. 게임  종료  ");
 
+		set_color(BG_COLOR_BLACK);
 		char a = getch();
 		if (a == '1')
 		{
 			x = x + 1;
 		}
-		if (a == '2')
+		if (a == -32)
 		{
 			isRunning = 0;
 		}
