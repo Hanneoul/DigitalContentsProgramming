@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Lecture04.sb3" />
+    <None Include="Lecture06.sb3" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
