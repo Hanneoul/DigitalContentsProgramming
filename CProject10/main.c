@@ -80,7 +80,6 @@ int main()
 
 	while (isRunning)
 	{
-
 		set_color(BG_COLOR_BRIGHTMAGENTA);
 		set_color(FONT_COLOR_WHITE);
 		move_cursor(50, 9);
