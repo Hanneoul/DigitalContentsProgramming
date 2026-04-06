@@ -24,6 +24,7 @@
     <ProjectGuid>{f9a81f8b-1509-4e84-a4ad-8aadc3a67672}</ProjectGuid>
     <RootNamespace>CProject07</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>CProject07_ANSI_Color2</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

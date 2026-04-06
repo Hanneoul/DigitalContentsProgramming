@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{9624e634-408b-44d6-9ca5-1d56bb746bfd}</ProjectGuid>
-    <RootNamespace>CProject03</RootNamespace>
+    <ProjectGuid>{185f42b7-5c10-4bc6-94c2-355a990a55f4}</ProjectGuid>
+    <RootNamespace>CProject11</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CProject03_getchar</ProjectName>
+    <ProjectName>CProject11_if_else</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

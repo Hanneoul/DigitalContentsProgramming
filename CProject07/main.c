@@ -10,7 +10,38 @@
  * 4. 색상 정보 주석:
  * - 0: Reset (초기화)   - 1: Bold (굵게)
  * - 31: Red, 32: Green, 33: Yellow, 34: Blue, 35: Magenta, 36: Cyan, 37: White
+
+
+ * ANSI Escape Sequence 색상 코드 가이드 (16색 표준)
+ * ---------------------------------------------------------
+ * [폰트 색상 (FG)]      [배경 색상 (BG)]      [색상명]
+ * 30                  40                  Black
+ * 31                  41                  Red
+ * 32                  42                  Green
+ * 33                  43                  Yellow
+ * 34                  44                  Blue
+ * 35                  45                  Magenta
+ * 36                  46                  Cyan
+ * 37                  47                  White
+ * ---------------------------------------------------------
+ * [밝은 폰트 (FG)]      [밝은 배경 (BG)]      [색상명]
+ * 90                  100                 Bright Black (Gray)
+ * 91                  101                 Bright Red
+ * 92                  102                 Bright Green
+ * 93                  103                 Bright Yellow
+ * 94                  104                 Bright Blue
+ * 95                  105                 Bright Magenta
+ * 96                  106                 Bright Cyan
+ * 97                  107                 Bright White
+ * ---------------------------------------------------------
+ * [기타 제어]
+ * 0 : 모든 속성 초기화 (Reset)
+ * 1 : 굵게 (Bold)
+ * 4 : 밑줄 (Underline)
+ * ---------------------------------------------------------
+ * 사용법: printf("\x1b[%dm", 코드);
  */
+
 
 #include <stdio.h>
 

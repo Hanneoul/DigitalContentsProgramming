@@ -24,6 +24,7 @@
     <ProjectGuid>{a754f62e-516e-4b69-acf1-84c40468a378}</ProjectGuid>
     <RootNamespace>Cproject02</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Cproject02_ANSI_Cursor_Printf</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
