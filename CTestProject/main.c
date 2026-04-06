@@ -20,6 +20,8 @@
 #define FONT_COLOR_WHITE 37
 #define BG_COLOR_WHITE 47
 
+#define KEY_ESC 27
+
 /*
  * ANSI Escape Sequence 색상 코드 가이드 (16색 표준)
  * ---------------------------------------------------------
@@ -74,9 +76,9 @@ int move_cursor(int x, int y)
 
 int main()
 {
-	int x = 0;
-	int y = 0;
+	unsigned short menuCursor = 1;
 	int isRunning = 1;
+
 
 	while (isRunning)
 	{
@@ -93,29 +95,55 @@ int main()
 		set_color(BG_COLOR_BLACK);
 		
 
+		
+		if (menuCursor == 1)
+		{
+			set_color(BG_COLOR_YELLOW);
+		}
 		move_cursor(52, 13);
 		printf("  1. 게임  시작  ");
-
+		if (menuCursor == 1)
+		{
+			set_color(BG_COLOR_BLACK);
+		}
+		if (menuCursor == 2)
+		{
+			set_color(BG_COLOR_YELLOW);
+		}
 		move_cursor(52, 15);
 		printf("  2. 만든  사람  ");
+		if (menuCursor == 2)
+		{
+			set_color(BG_COLOR_BLACK);
+		}
+		if (menuCursor == 3)
+		{
+			set_color(BG_COLOR_YELLOW);
+		}
 		
-		set_color(BG_COLOR_YELLOW);
 		move_cursor(52, 17);
 		printf("  3. 게임  종료  ");
-
-		set_color(BG_COLOR_BLACK);
-		char a = getch();
-		if (a == '1')
+		if (menuCursor == 3)
 		{
-			x = x + 1;
+			set_color(BG_COLOR_BLACK);
+		}		
+		char a = getch();
+		if (a == 'w')
+		{
+			if (menuCursor > 1)
+				menuCursor = menuCursor - 1;
 		}
-		if (a == -32)
+		if (a == 's')
+		{
+			if (menuCursor < 3)
+				menuCursor = menuCursor + 1;
+		}
+		if (a == KEY_ESC)
 		{
 			isRunning = 0;
 		}
 		system("cls");
-		move_cursor(x, y);
-		printf("*");
+		
 	}
 
 
