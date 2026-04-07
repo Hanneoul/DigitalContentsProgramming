@@ -67,7 +67,7 @@ int move_cursor(int x, int y);
 int menu = 1;
 int isRunning = 1;
 
-void RenderTitle()
+int RenderTitle()
 {
 	set_color(BG_COLOR_BRIGHTMAGENTA);
 	set_color(FONT_COLOR_WHITE);
@@ -105,26 +105,37 @@ void RenderTitle()
 	set_color(BG_COLOR_BLACK);
 
 	char a = getch();
-	if (a == 'w')
+	switch(a) 
 	{
+	case 'w':
 		if (menu > 1)
 		{
 			menu = menu - 1;
 		}
-	}
-	if (a == 's')
-	{
+		break;
+	case 's':
 		if (menu < 3)
 		{
 			menu = menu + 1;
 		}
-	}
-	if (a == 27)
-	{
+		break;
+	case 27:
 		isRunning = 0;
-	}	
+		break;
+	case 13:	
+		if (menu == 1)
+			return 1;
+		break;
+	}
+	
+	return 0;
 }
 
+int MainGame()
+{
+	system("cls");
+	return 1;
+}
 
 void set_color(int code)
 {
@@ -139,13 +150,22 @@ int move_cursor(int x, int y)
 
 int main()
 {
-	
-	
+	// 0: 타이틀화면
+	// 1: 게임시작
+	int gameStatus = 0;
 
 	while (isRunning)
 	{
-		RenderTitle();	
-		
+		switch (gameStatus)
+		{
+		case 0:
+			gameStatus = RenderTitle();
+			break;
+		case 1:
+			gameStatus = MainGame();
+			break;
+		}
+			
 	}
 
 	system("cls");
