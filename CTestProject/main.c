@@ -133,7 +133,57 @@ int RenderTitle()
 
 int MainGame()
 {
+	int y = 25;
+
 	system("cls");
+
+	while (y > 0)
+	{
+		move_cursor(0, y+1);
+		printf("                         ");
+		move_cursor(0, y);
+		printf("Ã¹»ç¶û : ³Í ¿Ö ¸Ç³¯ ´Ê¾î?");
+		Sleep(100);
+		y = y - 1;
+	}
+
+	y = 25;
+
+	while (y > 2)
+	{
+		move_cursor(0, 0);
+		printf("Ã¹»ç¶û : ³Í ¿Ö ¸Ç³¯ ´Ê¾î?");
+
+		move_cursor(0, y + 1);
+		printf("                                      ");
+		move_cursor(0, y);
+		printf("Çã±Ôºó : ¾î..¾îÁ¦ ¹ã¿¡ ¹¹Á» ÇÏ´Ù°¡....");
+		Sleep(100);
+		y = y - 1;
+	}	
+
+	y = 25;
+
+	while (y > 4)
+	{
+		move_cursor(0, 0);
+		printf("Ã¹»ç¶û : ³Í ¿Ö ¸Ç³¯ ´Ê¾î?");
+
+		move_cursor(0, 3);
+		printf("Çã±Ôºó : ¾î..¾îÁ¦ ¹ã¿¡ ¹¹Á» ÇÏ´Ù°¡....");
+
+		move_cursor(0, y + 1);
+		printf("              ");
+		move_cursor(0, y);
+		printf("Ã¹»ç¶û : Á×¾î.");
+		Sleep(100);
+		y = y - 1;
+	}
+
+	printf("\n\n Game Over\n¾Æ¹« Å°³ª ´©¸£¼¼¿ä");
+	int a = getch();
+	system("cls");
+	
 	return 1;
 }
 
