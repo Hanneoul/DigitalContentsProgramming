@@ -144,8 +144,7 @@ int main()
 
 	while (isRunning)
 	{
-		RenderTitle();
-		
+		RenderTitle();	
 		
 	}
 
