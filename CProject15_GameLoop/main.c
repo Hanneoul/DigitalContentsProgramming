@@ -66,7 +66,7 @@ int Render()
 		system("cls");
 		puts("             타이틀 화면이다!!!! \n");
 		puts("     ESC 키를 누르면 게임이 종료됩니다. \n");
-		//gameState = GAMESTATE_TITLE;
+		gameState = GAMESTATE_TITLE;
 	}
 	if (gameState == GAMESTATE_TITLE)
 	{

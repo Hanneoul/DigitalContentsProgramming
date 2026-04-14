@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fcf3e360-497c-48b9-aeb7-a43d06f2c87a}</ProjectGuid>
-    <RootNamespace>CProject15GameLoop</RootNamespace>
+    <ProjectGuid>{f7f0fd4f-99e2-4c32-be6a-abedf7b46305}</ProjectGuid>
+    <RootNamespace>CProject16GameStateTitleMenu</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CProject16_GameLoop</ProjectName>
+    <ProjectName>CProject15_GameState_TitleMenu</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

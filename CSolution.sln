@@ -35,7 +35,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject13_SwitchCase", "CP
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject14_Loop", "CProject14_Loop\CProject14_Loop.vcxproj", "{5DE702DF-2DF1-45F9-8E73-E3E1D93F9493}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject15_GameLoop", "CProject15_GameLoop\CProject15_GameLoop.vcxproj", "{FCF3E360-497C-48B9-AEB7-A43D06F2C87A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject16_GameLoop", "CProject15_GameLoop\CProject15_GameLoop.vcxproj", "{FCF3E360-497C-48B9-AEB7-A43D06F2C87A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject15_GameState_TitleMenu", "CProject16_GameState_TitleMenu\CProject16_GameState_TitleMenu.vcxproj", "{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,6 +183,14 @@ Global
 		{FCF3E360-497C-48B9-AEB7-A43D06F2C87A}.Release|x64.Build.0 = Release|x64
 		{FCF3E360-497C-48B9-AEB7-A43D06F2C87A}.Release|x86.ActiveCfg = Release|Win32
 		{FCF3E360-497C-48B9-AEB7-A43D06F2C87A}.Release|x86.Build.0 = Release|Win32
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Debug|x64.ActiveCfg = Debug|x64
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Debug|x64.Build.0 = Debug|x64
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Debug|x86.ActiveCfg = Debug|Win32
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Debug|x86.Build.0 = Debug|Win32
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Release|x64.ActiveCfg = Release|x64
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Release|x64.Build.0 = Release|x64
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Release|x86.ActiveCfg = Release|Win32
+		{F7F0FD4F-99E2-4C32-BE6A-ABEDF7B46305}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
