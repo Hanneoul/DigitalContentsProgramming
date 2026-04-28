@@ -52,6 +52,7 @@
 
 #include <stdio.h>
 #include <Windows.h>
+
 #define GAMESTATE_QUIT -1
 #define GAMESTATE_START 0
 #define GAMESTATE_TITLE 1
