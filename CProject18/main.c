@@ -13,14 +13,13 @@
 #include <Windows.h>
 #include <stdbool.h>
 
- // --- [전역 변수 (Global Variables)] ---
- // 프로그램 시작부터 끝까지 살아있으며, 모든 함수가 공유함.
+// --- [전역 변수 (Global Variables)] ---
+// 프로그램 시작부터 끝까지 살아있으며, 모든 함수가 공유함.
 int g_x = 10, g_y = 5;      // 캐릭터 좌표 (g_를 붙여 전역임을 명시하는 관습)
 bool g_isRunning = true;    // 게임 실행 상태
 char g_inputKey = 0;        // 눌린 키 저장용
 
 // --- [함수 선언부] ---
-
 // 1. 입력 단계: 지금 어떤 키가 눌렸는지만 판단함.
 void ProcessInput() {
     // _kbhit은 conio.h의 함수로, 키가 눌렸는지 즉시 확인(Non-blocking)
@@ -50,16 +49,20 @@ void Update() {
 void Render() {
     system("cls"); // 화면 지우기
 
-    printf("=== 전역/지역 변수 실습 (WASD 이동 / Q 종료) ===\n");
-    printf("현재 좌표 - X: %d, Y: %d\n", g_x, g_y);
-    printf("--------------------------------------------\n");
+    printf("=== 게임루프 실습 (WASD 이동 / Q 종료) ===\n");
+    printf(" 현재 좌표 - X: %d, Y: %d\n", g_x, g_y);
+    printf("------------------------------------------------\n");
 
     // --- [지역 변수 (Local Variables) 사용] ---
     // i와 j는 Render 함수 내부에서만 존재하며, 함수가 끝나면 사라짐.
-    for (int i = 0; i < g_y; i++) {
+    int i;
+    for (i = 0; i < g_y; i++) 
+    {
         printf("\n");
     }
-    for (int j = 0; j < g_x; j++) {
+    int j;
+    for (j = 0; j < g_x; j++) 
+    {
         printf(" ");
     }
     printf("(*_*)\n");
@@ -73,7 +76,7 @@ int main() {
         Update();       // 계산하기
         Render();       // 그리기
 
-        Sleep(30);      // 초당 약 30프레임 속도 조절
+        Sleep(10);      // 초당 약 10프레임 속도 조절
     }
 
     printf("\n게임을 종료합니다.\n");

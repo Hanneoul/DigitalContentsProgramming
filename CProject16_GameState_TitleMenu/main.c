@@ -147,7 +147,7 @@ int MainGame()
 		printf("                                 ");
 		move_cursor(0, y);
 		printf("첫사랑 : 넌 왜 맨날 대답이 늦어?");
-		Sleep(100);
+		Sleep(100 - (y*4));
 		y = y - 1;
 	}
 
@@ -162,7 +162,7 @@ int MainGame()
 		printf("                                      ");
 		move_cursor(0, y);
 		printf("주인공 : 어..내가 뭐좀 하다가....");
-		Sleep(100);
+		Sleep(100 - (y * 4));
 		y = y - 1;
 	}
 
@@ -180,7 +180,7 @@ int MainGame()
 		printf("              ");
 		move_cursor(0, y);
 		printf("첫사랑 : 죽어.");
-		Sleep(100);
+		Sleep(100 - (y * 4));
 		y = y - 1;
 	}
 
