@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0bbd2d9a-363e-4550-8c8b-b94339031cbf}</ProjectGuid>
-    <RootNamespace>CProject17GameLoop2</RootNamespace>
+    <ProjectGuid>{ab4524ac-d11e-4124-bdc3-253c3ceccde4}</ProjectGuid>
+    <RootNamespace>CProject19GameLoopVsync</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CProject17-Coordinate_MoveKey</ProjectName>
+    <ProjectName>CProject19-GameLoop_Global Variable</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
