@@ -1,55 +1,77 @@
 /*
  * =========================================================================
- * [고급 최적화: ANSI Escape Code & Partial Update]
+ * [심화 학습: 비트 연산과 16진수 0x8000의 비밀]
  * =========================================================================
- * 1. 성능 분석: system("cls") vs ANSI Sequence
- * - cls: 외부 프로그램 실행(무거움) + 화면 전체 삭제(깜빡임 유발).
- * - ANSI: 출력 스트림 명령(가벼움) + 필요한 부분만 수정(깜빡임 없음).
- * * 2. 전역 변수(Global) vs 지역 변수(Local)
- * - 전역: g_x, g_y처럼 게임의 '상태'를 유지하며 모든 함수가 공유함.
- * - 지역: i, j처럼 함수 내에서 잠깐 계산용(Loop 등)으로 쓰고 사라짐.
- * * 3. 부분 업데이트 원리 (Dirty Rect)
- * - 캐릭터가 '있었던' 자리를 기억(g_prevX, g_prevY)했다가 그곳만 지우는 방식.
+ * 1. 왜 10진수가 아닌 16진수(0x)인가?
+ *    - 컴퓨터의 최소 단위인 비트(Bit)를 4개씩 묶어서 표현하기 가장 좋기 때문.
+ *    - 0x8000은 2진수로 1000 0000 0000 0000 임. (직관적인 비트 확인 가능)
+ *
+ * 2. & (비트 AND) 연산의 역할:
+ *    - 함수의 리턴값에는 여러 정보가 섞여 있을 수 있음.
+ *    - '리턴값 & 0x8000'은 "다른 비트는 다 무시하고, 맨 왼쪽(눌림 상태)
+ *      비트가 1인지(켜져 있는지)만 확인하겠다"는 뜻임. (비트 마스킹)
+ *
+ * 3. 8, 4, 2, 1의 법칙:
+ *    - 2진수의 각 자릿수를 16진수 한 글자로 표현할 때 나타나는 숫자들임.
+ *    - 8(1000), 4(0100), 2(0010), 1(0001)
  * =========================================================================
  */
 
+ 
 #include <stdio.h>
-#include <conio.h>
-#include <Windows.h>
+#include <Windows.h> // GetAsyncKeyState, Sleep 등을 사용하기 위해 필수
 #include <stdbool.h>
 
- // --- [전역 변수: 모든 함수가 공유하는 데이터] ---
-int g_x = 10, g_y = 5;          // 현재 캐릭터 좌표
-int g_prevX = 10, g_prevY = 5;  // 이전 프레임의 캐릭터 좌표 (지우기 용도)
-bool g_isRunning = true;        // 루프 제어
-char g_inputKey = 0;            // 입력된 키 저장
+/*
+ * =========================================================================
+ * [고급 최적화: 비표준 라이브러리를 이용한 실시간 입력 제어]
+ * =========================================================================
+ * 1. GetAsyncKeyState(KeyCode)란?
+ * - Windows.h에서 제공하는 비표준 API 함수.
+ * - 키보드 버퍼를 거치지 않고 하드웨어의 키 상태(눌림/안눌림)를 직접 조회함.
+ * - 장점: 키를 꾹 누르고 있으면 연속 입력이 가능하고, 여러 키를 동시에 누르는 것도 감지함.
+ *
+ * 2. 조작감의 차이:
+ * - _getch(): 한 번 누르면 한 칸 가고, 꾹 누르면 잠시 후 타다다닥 움직임 (타이핑 방식).
+ * - GetAsyncKeyState(): 누르는 순간부터 뗄 때까지 프레임마다 즉시 반응 (게임 방식).
+ *
+ * 3. 비표준 라이브러리의 위력:
+ * - 표준 C(stdio.h)만으로는 이러한 '실시간성'을 확보할 수 없음.
+ * - 운영체제(OS)의 기능을 직접 빌려 쓰는 것이 게임 엔진 개발의 핵심임.
+ * =========================================================================
+ */
 
-// --- [기능별 함수화 (I-U-R 구조)] ---
+ // --- [전역 변수] ---
+int g_x = 10, g_y = 5;          // 현재 좌표
+int g_prevX = 10, g_prevY = 5;  // 이전 좌표 (지우기용)
+bool g_isRunning = true;
 
-// 특정 위치로 커서를 즉시 이동시키는 함수 (ANSI 방식)
+// 특정 위치로 커서 이동 (ANSI)
 void MoveCursor(int row, int col) {
-    // \x1b[ : ANSI 시작 / %d;%dH : 행;열 이동 / H : 명령 끝
     printf("\x1b[%d;%dH", row + 1, col + 1);
 }
 
-// 1. 입력 (Input)
+// 1. 입력 (Input) - GetAsyncKeyState 활용
 void ProcessInput() {
-    if (_kbhit()) g_inputKey = _getch();
-    else g_inputKey = 0;
+    // 0x8000은 "현재 키가 눌려 있다"는 상태 비트임
+    // VK_UP, VK_DOWN 등 가상 키 코드를 사용할 수도 있지만, 
+    // 알파벳의 경우 'W', 'S' 처럼 대문자 아스키코드를 사용함.
+
+    // 예시: 만약 키가 눌려있다면 리턴값은 0x8000 (또는 그 이상)
+    // 0x8001 & 0x8000 -> 결과는 0x8000 (참)
+    // 0x0001 & 0x8000 -> 결과는 0x0000 (거짓)
+    
+    if (GetAsyncKeyState('W') & 0x8000) g_y--;
+    if (GetAsyncKeyState('S') & 0x8000) g_y++;
+    if (GetAsyncKeyState('A') & 0x8000) g_x--;
+    if (GetAsyncKeyState('D') & 0x8000) g_x++;
+
+    // 종료키 확인
+    if (GetAsyncKeyState('Q') & 0x8000) g_isRunning = false;
 }
 
 // 2. 업데이트 (Update)
 void Update() {
-    // 이동 전 위치를 저장 (나중에 이곳만 콕 집어서 지우기 위해)
-    g_prevX = g_x;
-    g_prevY = g_y;
-
-    if (g_inputKey == 'w' || g_inputKey == 'W') g_y--;
-    else if (g_inputKey == 's' || g_inputKey == 'S') g_y++;
-    else if (g_inputKey == 'a' || g_inputKey == 'A') g_x--;
-    else if (g_inputKey == 'd' || g_inputKey == 'D') g_x++;
-    else if (g_inputKey == 'q' || g_inputKey == 'Q') g_isRunning = false;
-
     // 경계 검사 (Wall Collision)
     if (g_x < 0) g_x = 0; if (g_x > 60) g_x = 60;
     if (g_y < 0) g_y = 0; if (g_y > 20) g_y = 20;
@@ -57,42 +79,48 @@ void Update() {
 
 // 3. 렌더링 (Render)
 void Render() {
-    // [최적화 핵심] 위치가 변했을 때만 이전 위치를 공백으로 지움
+    // 움직임이 있을 때만 이전 위치 지우기
     if (g_x != g_prevX || g_y != g_prevY) {
         MoveCursor(g_prevY, g_prevX);
-        printf("     "); // 이전 캐릭터 자리를 지우기
+        printf("     "); // 이전 캐릭터 잔상 제거
+
+        // 지운 후 현재 위치를 다시 그리기
+        MoveCursor(g_y, g_x);
+        printf("(*_*)");
+
+        // UI 업데이트
+        MoveCursor(22, 0);
+        printf("--------------------------------------------\n");
+        printf(" 좌표: %02d, %02d | 비표준 GetAsyncKeyState 활용 중\n", g_x, g_y);
+        printf(" WASD: 실시간 이동(꾹 누르기 가능), Q: 종료\n");
+        printf("--------------------------------------------");
+
+        // 현재 좌표를 이전 좌표로 저장
+        g_prevX = g_x;
+        g_prevY = g_y;
     }
-
-    // 새 위치에 캐릭터 그리기
-    MoveCursor(g_y, g_x);
-    printf("(*_*)\n");
-
-    // UI 영역 (고정 위치 렌더링)
-    MoveCursor(22, 0);
-    printf("--------------------------------------------\n");
-    printf(" 좌표: %02d, %02d | system(\"cls\") 없는 부드러운 이동\n", g_x, g_y);
-    printf(" WASD: 이동, Q: 종료\n");
-    printf("--------------------------------------------");
 }
 
 int main() {
-    
-    system("cls"); // 시작할 때 딱 한 번만 화면을 깨끗이 지움
-    printf("\x1b[?25l"); // 커서가 깜빡거리면 보기 싫으므로 숨김
 
-    // [메인 게임 루프]
+    system("cls");
+    printf("\x1b[?25l"); // 커서 숨기기
+
+    // 초기 캐릭터 출력
+    MoveCursor(g_y, g_x);
+    printf("(*_*)");
+
     while (g_isRunning) {
-        ProcessInput(); // 1. 듣기
-        Update();       // 2. 생각하기
-        Render();       // 3. 말하기(그리기)
+        ProcessInput(); // 입력 체크 (누르고 있으면 바로 반영)
+        Update();       // 로직 처리
+        Render();       // 화면 그리기
 
-        Sleep(10); // 초당 약 100프레임 (매우 부드러움)
+        Sleep(20);      // 약 50 FPS (너무 빠르면 제어가 힘드므로 조절)
     }
 
-    // 종료 시 설정 복구
-    printf("\x1b[?25h"); // 커서 다시 보이기
+    printf("\x1b[?25h"); // 커서 복구
     system("cls");
-    printf("게임을 종료합니다.\n");
+    printf("비표준 라이브러리 제어를 종료합니다.\n");
 
     return 0;
 }

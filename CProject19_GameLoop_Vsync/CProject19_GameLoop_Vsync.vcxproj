@@ -24,7 +24,7 @@
     <ProjectGuid>{ab4524ac-d11e-4124-bdc3-253c3ceccde4}</ProjectGuid>
     <RootNamespace>CProject19GameLoopVsync</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CProject19-GameLoop_Optimization</ProjectName>
+    <ProjectName>CProject19_GameLoop_Optimization</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
