@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//컨플릭트(conflict : 충돌) 만들기
+
 #define SCR_W 40
 #define SCR_H 20
 #define WORLD_W 200
