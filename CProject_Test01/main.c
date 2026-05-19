@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+//내가 원존데 무슨말?
+
 #define SCR_W 40
 #define SCR_H 20
 #define WORLD_W 200
