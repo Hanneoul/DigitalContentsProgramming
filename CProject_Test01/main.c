@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//내가 원존데 무슨말?
+//컨플릭트(conflict : 충돌) 만들기
 
 #define SCR_W 40
 #define SCR_H 20
