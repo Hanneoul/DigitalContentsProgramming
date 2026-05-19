@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+//컨플릭트(conflict : 충돌) 만들기
 #define SCR_W 40
 #define SCR_H 20
 #define WORLD_W 200
@@ -11,7 +12,8 @@ void draw_pixel(int x, int y, int r, int g, int b) {
     printf("\033[%d;%dH\033[48;2;%d;%d;%dm  \033[0m", y + 1, (x * 2) + 1, r, g, b);
 }
 
-int main() {
+int main() 
+{
     int playerX = 10;
     int cameraX = 0;
     char cmd;
@@ -19,7 +21,8 @@ int main() {
     // 초기 세팅: 화면 지우기, 커서 숨기기[cite: 1]
     printf("\033[2J\033[?25l");
 
-    while (1) {
+    while (1) 
+    {
         // 1. 카메라 위치 계산 (플레이어를 화면 중앙에 유지)
         cameraX = playerX - (SCR_W / 2);
         if (cameraX < 0) cameraX = 0;
@@ -27,18 +30,22 @@ int main() {
 
         // 2. 렌더링 (그리기)
         // 화면 전체를 짙은 파란색으로 일단 채움 (하늘)
-        for (int y = 0; y < SCR_H; y++) {
-            for (int x = 0; x < SCR_W; x++) {
+        for (int y = 0; y < SCR_H; y++) 
+        {
+            for (int x = 0; x < SCR_W; x++) 
+            {
                 draw_pixel(x, y, 10, 10, 40);
             }
         }
 
         // 월드 지형물 그리기 (10칸 간격으로 검정색 기둥 배치)
         // 3비트 0번 검정이 불안정할 수 있으니 24비트 (0,0,0)으로 확실하게 그림
-        for (int wx = 0; wx < WORLD_W; wx += 10) {
+        for (int wx = 0; wx < WORLD_W; wx += 10) 
+        {
             int sx = wx - cameraX; // 월드 좌표를 화면 좌표로 변환[cite: 1]
             if (sx >= 0 && sx < SCR_W) {
-                for (int sy = 5; sy < SCR_H-5; sy++) {
+                for (int sy = 5; sy < SCR_H-5; sy++) 
+                {
                     draw_pixel(sx, sy, 80, 80, 80); // "진짜" 검정색 픽셀
                 }
             }
