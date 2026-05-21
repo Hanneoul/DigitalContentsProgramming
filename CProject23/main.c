@@ -25,7 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 
-int main() {
+int main() 
+{
     // [1] 배열로 문자열 선언 (메모리에 공간 확보)
     char heroName[20] = "Magician";
     char enemyName[20];
