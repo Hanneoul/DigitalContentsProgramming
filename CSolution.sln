@@ -71,6 +71,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject29_DrawPixel", "CPr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject30_ScrollView", "CProject30_ScrollView\CProject30_ScrollView.vcxproj", "{1196A69F-4F8E-4CC3-AB69-A015EDDEE4D0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject31_scanf", "CProject31_scanf\CProject31_scanf.vcxproj", "{970D2759-4F3C-425C-95A6-A96198B2E6C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -351,6 +353,14 @@ Global
 		{1196A69F-4F8E-4CC3-AB69-A015EDDEE4D0}.Release|x64.Build.0 = Release|x64
 		{1196A69F-4F8E-4CC3-AB69-A015EDDEE4D0}.Release|x86.ActiveCfg = Release|Win32
 		{1196A69F-4F8E-4CC3-AB69-A015EDDEE4D0}.Release|x86.Build.0 = Release|Win32
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Debug|x64.ActiveCfg = Debug|x64
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Debug|x64.Build.0 = Debug|x64
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Debug|x86.ActiveCfg = Debug|Win32
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Debug|x86.Build.0 = Debug|Win32
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Release|x64.ActiveCfg = Release|x64
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Release|x64.Build.0 = Release|x64
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Release|x86.ActiveCfg = Release|Win32
+		{970D2759-4F3C-425C-95A6-A96198B2E6C6}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
