@@ -33,7 +33,8 @@
 #include <stdio.h>
 #include <conio.h> // getch() 함수를 사용하기 위해 반드시 필요한 헤더
 
-int main() {
+int main() 
+{
     // [게임 상태 변수 선언]
     int current_room = 1;  // 현재 플레이어의 위치 (1: 어두운 방, 2: 서재, 3: 비밀 통로)
     int has_key = 0;       // 열쇠 획득 여부 (0: 없음, 1: 있음)

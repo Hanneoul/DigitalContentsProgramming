@@ -77,6 +77,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject32_MUD_getch", "CPr
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject33_Battle_scanf", "CProject33_Battle_scanf\CProject33_Battle_scanf.vcxproj", "{1C72FDF6-A0F0-4158-ABCC-F5F7A014F19D}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CProject34", "CProject34\CProject34.vcxproj", "{0F871160-ED3C-4765-AF3F-8D5623DDA77E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -381,6 +383,14 @@ Global
 		{1C72FDF6-A0F0-4158-ABCC-F5F7A014F19D}.Release|x64.Build.0 = Release|x64
 		{1C72FDF6-A0F0-4158-ABCC-F5F7A014F19D}.Release|x86.ActiveCfg = Release|Win32
 		{1C72FDF6-A0F0-4158-ABCC-F5F7A014F19D}.Release|x86.Build.0 = Release|Win32
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Debug|x64.ActiveCfg = Debug|x64
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Debug|x64.Build.0 = Debug|x64
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Debug|x86.ActiveCfg = Debug|Win32
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Debug|x86.Build.0 = Debug|Win32
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Release|x64.ActiveCfg = Release|x64
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Release|x64.Build.0 = Release|x64
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Release|x86.ActiveCfg = Release|Win32
+		{0F871160-ED3C-4765-AF3F-8D5623DDA77E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
