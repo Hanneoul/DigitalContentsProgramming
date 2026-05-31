@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{0f871160-ed3c-4765-af3f-8d5623dda77e}</ProjectGuid>
-    <RootNamespace>CProject34</RootNamespace>
+    <ProjectGuid>{7e831c61-1075-423d-9aae-959de7afba2f}</ProjectGuid>
+    <RootNamespace>CProject36BattleThread</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CProject34_Time</ProjectName>
+    <ProjectName>CProject36_Time_Jump</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

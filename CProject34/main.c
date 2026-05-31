@@ -1,270 +1,114 @@
-﻿
+﻿/*
+================================================================================
+[C언어 초보자 전용 강의자료: <time.h> 라이브러리의 모든 것]
+================================================================================
+1. <time.h>가 도대체 무엇인가?
+   - C언어 표준 라이브러리(Standard Library) 중 하나임.
+   - 즉, 윈도우, 리눅스, 맥, 임베디드 장치 등 C언어 컴파일러가 있는 곳이라면
+     어디서나 별도의 추가 설치 없이 `#include <time.h>`만으로 즉시 사용할 수 있음.
 
+2. 어떨 때 주로 사용하는가?
+   - 프로그램 내에서 "현재 날짜와 시간"을 구해서 로그를 남기거나 화면에 뿌릴 때.
+   - 실행할 때마다 매번 다른 무작위 값이 나오도록 "난수 시드(srand)"를 초기화할 때.
+   - 특정 연산이나 알고리즘, 게임 루프가 실행되는 데 걸리는 "소모 시간(Performance)"을 측정할 때.
 
-
-/*
-=============================================================================
-[강의 자료: scanf()를 활용한 문자열 분석과 ANSI 화면 제어]
-=============================================================================
-
-1. 문자열을 입력받는 scanf("%s")의 원리
-   - %s 서식 지정자는 공백(스페이스, 탭, 엔터)을 '데이터를 구분하는 기준'으로 사용함.
-   - 예: scanf("%s %s", action, position); 문장에 "공격 상단"이라고 입력하고 엔터를 치면?
-     -> 첫 번째 %s가 공백 앞의 "공격"을 읽어서 action 변수에 저장함.
-     -> 두 번째 %s가 공백 뒤의 "상단"을 읽어서 position 변수에 저장함.
-   - 이 성질을 이용하면 사용자가 문장 형태로 입력한 명령어를 단어별로 쪼개어 분석할 수 있음.
-   - ※ 주의: 문자열을 저장하는 char 배열은 그 자체로 주소(Address) 역할을 하므로,
-     scanf에 넘겨줄 때 변수 앞에 '&' 기호들을 붙이지 않음.
-
-2. 입력받은 문자열 비교하기: strcmp()
-   - C언어에서는 `if (action == "공격")` 처럼 비교 연산자(==)로 문자열의 내용을 직접 비교할 수 없음.
-   - <string.h> 헤더에서 제공하는 strcmp(문자열1, 문자열2) 함수를 사용해야 함.
-   - 두 문자열의 내용이 완전히 일치하면 정수 0을 반환함 -> `if (strcmp(action, "공격") == 0)`
-
-3. ANSI Escape Sequence를 이용한 화면 동적 제어
-   - 콘솔창은 원래 아래로만 글자가 내려가지만, 특수 기호 묶음(\033[...)을 출력하면
-     커서의 위치를 바꾸거나 화면을 지우고 글자 색상을 바꿀 수 있음.
-   - \033[2J : 콘솔 화면 전체를 깨끗하게 지움 (Clear Screen)
-   - \033[H  : 커서를 화면의 최상단 좌측(0,0 위치)으로 이동시킴. 이를 이용해 화면을 덮어씌움.
-   - \033[행;열H : 커서를 특정 행과 열 위치로 다이렉트 이동시킴 (타격 이펙트 연출에 필수)
-   - 색상 코드 예시: \033[1;31m (밝은 빨간색 글자), \033[0m (색상 초기화)
-
-4. 게임 시스템 규칙 캡슐화
-   - 턴이 시작되면 플레이어의 입력을 받은 후, 컴퓨터(AI)의 행동을 난수(rand)로 결정함.
-   - 두 캐릭터의 행동(공격/방어)과 위치(상단/하단)가 매칭되는 조건문을 통해 데미지 공식을 적용함.
-=============================================================================
+3. <time.h>는 어디까지(어떤 단위까지) 정밀하게 측정할 수 있는가?
+   - 이론적/구조적 한계: C 표준의 `clock()` 함수가 반환하는 값의 정밀도는 운영체제(OS)와
+     하드웨어 시스템의 내부 타이머 성능에 완벽하게 종속됨.
+   - Windows 환경의 현실: 윈도우 환경에서 <time.h>의 `CLOCKS_PER_SEC`은 대개 `1000`으로 고정되어 있음.
+     이 말은 1초를 1000개로 쪼개서 측정한다는 뜻이므로, **밀리초(ms, 1/1,000초)** 단위까지만
+     실질적으로 측정할 수 있음.
+   - 마이크로초(us)나 나노초(ns) 값을 구하기 위해 수학적으로 1000000을 곱하더라도,
+     실제 측정 장치의 최소 눈금(해상도)이 밀리초 수준이기 때문에 뒤쪽 소수점 자리는
+     정밀하지 않고 0에 가깝게 툭툭 끊겨서 채워지게 됨.
+   - 진짜 초정밀(마이크로/나노초) 측정이 필요하다면, C 표준 라이브러리가 아니라
+     OS 전용 특수 함수(예: Windows의 QueryPerformanceCounter API 등)를 강제로 끌어다 써야 함.
+================================================================================
 */
-#define _CRT_SECURE_NO_WARNINGS // 최신 Visual Studio에서 보안 경고를 무시함
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <Windows.h>
+#include <time.h>    // clock(), clock_t, CLOCKS_PER_SEC을 쓰기 위한 표준 라이브러리
+#include <windows.h> // Sleep() 함수를 호출하여 인위적으로 시간을 지연시키기 위한 OS API
 
-// [ANSI Escape Sequence 매크로 정의] - 가독성을 높이기 위함
-#define CLEAR_SCREEN() printf("\033[2J\033[H")
-#define MOVE_CURSOR(row, col) printf("\033[%d;%dH", row, col)
-#define COLOR_RED()    printf("\033[1;31m")
-#define COLOR_BLUE()   printf("\033[1;34m")
-#define COLOR_YELLOW() printf("\033[1;33m")
-#define COLOR_RESET()  printf("\033[0m")
-
-int main()
+int main(void) 
 {
-    // 난수 생성기 초기화 (컴퓨터의 무작위 행동 결정용)
-    srand((unsigned int)time(NULL));
+    // -------------------------------------------------------------------------
+    // [자료구조 및 타입 설명]
+    // clock_t는 변수 타입 이름임. 정체는 'long' 또는 'long long' 같은 내부적 정수형임.
+    // CPU가 프로그램을 실행하면서 "틱! 톡!" 하고 발생시킨 총 클록 신호 횟수를 저장함.
+    // -------------------------------------------------------------------------
+    clock_t start_tick; // 연산 시작 시점의 CPU 클록 틱 카운트를 저장할 변수
+    clock_t end_tick;   // 연산 종료 시점의 CPU 클록 틱 카운트를 저장할 변수
+    clock_t total_ticks;// 종료 틱에서 시작 틱을 빼서 구한 "순수 소모 틱" 저장 변수
 
-    // [체력 상태 변수]
-    int player_hp = 100;
-    int enemy_hp = 100;
+    // 인간이 읽기 편한 소수점 형태의 시간 단위를 저장하기 위한 double(부동소수점) 변수들
+    double duration_seconds;      // 초(s) 단위 저장
+    double duration_milliseconds; // 밀리초(ms) 단위 저장
+    double duration_microseconds; // 마이크로초(us) 단위 저장
+    double duration_nanoseconds;  // 나노초(ns) 단위 저장
 
-    // [문자열 입력 저장 공간] - 한글은 1글자당 최소 2~3바이트를 차지하므로 넉넉하게 배열 크기 지정
-    char action[20];   // "공격" 또는 "방어"가 저장될 공간
-    char position[20]; // "상단" 또는 "하단"이 저장될 공간
+    printf("==================================================================\n");
+    // CLOCKS_PER_SEC은 <time.h> 내부에 정의된 상수로, "1초당 발생하는 틱 횟수"를 뜻함.
+    // Windows 환경에서는 대개 1000임. 즉, 1초에 1000번 틱이 가므로 1틱 = 1ms와 같음.
+    printf("현재 시스템의 초당 클록 틱 횟수(CLOCKS_PER_SEC): %ld 틱\n", (long)CLOCKS_PER_SEC);
+    printf("==================================================================\n\n");
 
-    // 컴퓨터(AI)의 행동 프로필 변수
-    int enemy_action;   // 0: 공격, 1: 방어
-    int enemy_position; // 0: 상단, 1: 하단
+    printf("[단계 1] 시간 측정 시작점 기록...\n");
+    // clock() 함수는 프로그램이 켜진 순간부터 지금 이 명령어가 실행된 순간까지 
+    // 흘러온 총 클록 틱 값을 반환함. 그것을 start_tick 변수에 박아둠.
+    start_tick = clock();
 
-    // 시스템 메시지 기록용 변수
-    char log_player[100] = "전투 준비 완료!";
-    char log_enemy[100] = "적이 무기를 겨눕니다.";
-    char log_damage[100] = "";
+    printf(" -> 현재 시작 틱 카운트: %ld 틱\n\n", (long)start_tick);
 
-    // 전투 루프 (두 사람 중 한 명의 체력이 0이 될 때까지)
-    while (player_hp > 0 && enemy_hp > 0) {
+    // -------------------------------------------------------------------------
+    // [인위적 지연] 컴퓨터에게 1.5초(1500밀리초) 동안 아무것도 하지 말고 쉬라고 명령함.
+    // 우리가 측정하고자 하는 '가상의 헤비한 게임 로직 연산'이라고 생각하면 됨.
+    // -------------------------------------------------------------------------
+    printf("[단계 2] 1500 밀리초(1.5초) 동안 Sleep 연산 수행 중...\n\n");
+    Sleep(1500);
 
-        // 1. 화면 전체를 먼저 비우고 상단부터 아스키 아트와 정보를 리프레시함
-        CLEAR_SCREEN();
+    printf("[단계 3] 시간 측정 종료점 기록...\n");
+    // Sleep이 끝난 직후의 총 클록 틱 값을 다시 한 번 딱 찍어서 변수에 저장함.
+    end_tick = clock();
+    printf(" -> 현재 종료 틱 카운트: %ld 틱\n\n", (long)end_tick);
 
-        printf("===============================================================\n");
-        printf("           C언어 텍스트 격투 게임 (scanf 문자열 분석)          \n");
-        printf("===============================================================\n\n");
+    // -------------------------------------------------------------------------
+    // [수학적 계산 및 단위 환산부]
+    // -------------------------------------------------------------------------
+    // 1. 소모된 순수 클록 틱 계산 (종료 시점 카운트 - 시작 시점 카운트)
+    total_ticks = end_tick - start_tick;
 
-        // 2. 플레이어와 적의 체력 바 시각화
-        printf(" [PLAYER] HP: %3d / 100           [ENEMY] HP: %3d / 100\n", player_hp, enemy_hp);
-        COLOR_RED();
-        printf(" ["); for (int i = 0; i < player_hp / 5; i++) printf("■"); for (int i = player_hp / 5; i < 20; i++) printf(" "); printf("]");
-        COLOR_BLUE();
-        printf("   ["); for (int i = 0; i < enemy_hp / 5; i++) printf("■"); for (int i = enemy_hp / 5; i < 20; i++) printf(" "); printf("]\n");
-        COLOR_RESET();
+    // 2. 초(Second) 단위 환산
+    // total_ticks는 정수이고 CLOCKS_PER_SEC도 정수이므로, 그냥 나누면 소수점이 다 잘려나감(정수 나눗셈의 늪).
+    // 따라서 앞에 (double) 캐스팅을 붙여 강제로 실수 연산으로 업그레이드해 주어야 소수점 아래까지 정확히 계산됨.
+    duration_seconds = (double)total_ticks / (double)CLOCKS_PER_SEC;
 
-        // 3. 전투 아스키 아트 (상단 대치 상태 그래픽)
-        printf("\n");
-        printf("        (o_o)                                 (X_X)        \n");
-        printf("        / | \\  [상단]                         / | \\        \n");
-        printf("         | |                                   | |         \n");
-        printf("        ---------                             ---------\n");
-        printf("        /     \\ [하단]                         /     \\       \n");
-        printf("       |       |                             |       |     \n");
-        printf("\n");
+    // 3. 밀리초(ms) 단위 환산: 1초는 1,000 밀리초이므로 초 단위에 1,000을 곱함.
+    duration_milliseconds = duration_seconds * 1000.0;
 
-        // 4. 이전 턴의 전투 로그 출력
-        printf("---------------------------------------------------------------\n");
-        printf(" * 플레이어 행동: %s\n", log_player);
-        printf(" * 에너미 행동: %s\n", log_enemy);
-        COLOR_YELLOW();
-        printf(" [전투 결과] %s\n", log_damage);
-        COLOR_RESET();
-        printf("---------------------------------------------------------------\n\n");
+    // 4. 마이크로초(us) 단위 환산: 1초는 1,000,000 마이크로초이므로 초 단위에 1,000,000을 곱함.
+    duration_microseconds = duration_seconds * 1000000.0;
 
-        // 5. 커맨드 입력 프롬프트
-        printf("※ 커맨드 입력 예시: [공격 상단] [공격 하단] [방어 상단] [방어 하단]\n");
-        printf(">> 명령을 입력하세요: ");
+    // 5. 나노초(ns) 단위 환산: 1초는 1,000,000,000 나노초이므로 초 단위에 1,000,000,000을 곱함.
+    duration_nanoseconds = duration_seconds * 1000000000.0;
 
-        // 문자열 두 개를 공백 기준으로 분석하여 각각 action과 position 배열에 채워넣음
-        if (scanf("%s %s", action, position) != 2) {
-            // 올바르게 두 단어가 입력되지 않았을 경우 입력 버퍼를 비우고 재시도
-            while (getchar() != '\n');
-            strcpy(log_damage, "올바른 형태로 두 단어(행동 위치)를 입력하십시오.");
-            continue;
-        }
-
-        // 6. 플레이어 입력 검증 및 정수형 데이터로 내부 치환 (계산 편의성 확보)
-        int p_act = -1, p_pos = -1;
-        if (strcmp(action, "공격") == 0) p_act = 0;
-        else if (strcmp(action, "방어") == 0) p_act = 1;
-
-        if (strcmp(position, "상단") == 0) p_pos = 0;
-        else if (strcmp(position, "하단") == 0) p_pos = 1;
-
-        if (p_act == -1 || p_pos == -1) {
-            strcpy(log_damage, "잘못된 단어가 포함되어 있습니다. (공격/방어, 상단/하단 조합만 가능)");
-            continue;
-        }
-
-        // 플레이어 행동을 로그 문자열로 포맷팅 저장
-        sprintf(log_player, "%s [%s]", action, position);
-
-        // 7. 적(AI)의 행동 무작위 결정
-        enemy_action = rand() % 2;   // 0 또는 1
-        enemy_position = rand() % 2; // 0 또는 1
-        sprintf(log_enemy, "%s [%s]", (enemy_action == 0 ? "공격" : "방어"), (enemy_position == 0 ? "상단" : "하단"));
-
-        // 기본 데미지 설정 (수치 조율 가능)
-        int base_dmg = 10;
-        int p_take_dmg = 0;
-        int e_take_dmg = 0;
-        int effect_trigger = 0; // 이펙트를 어느 위치에 그릴지 판단 (1: 플레이어 피격, 2: 에너미 피격, 3: 둘 다 피격, 4: 방어 효과)
-
-        // 8. 전투 핵심 룰 로직 분기 처리
-        if (p_act == 0 && enemy_action == 0) {
-            // [룰 1] 둘 다 동시에 공격한 경우
-            if (p_pos == enemy_position) {
-                // 공격 위치까지 겹치면 크로스 카운터, 둘 다 200% 데미지
-                p_take_dmg = base_dmg * 2;
-                e_take_dmg = base_dmg * 2;
-                sprintf(log_damage, "★크로스 카운터!★ 같은 위치를 정면 공격하여 서로 200%%의 피해(%d)를 입었습니다.", base_dmg * 2);
-                effect_trigger = 3;
-            }
-            else {
-                // 공격 위치가 다르면 각자 일반 공격 성공 (서로 100% 데미지)
-                p_take_dmg = base_dmg;
-                e_take_dmg = base_dmg;
-                sprintf(log_damage, "서로 빈 곳을 찔렀습니다. 각자 100%%의 피해(%d)를 입었습니다.", base_dmg);
-                effect_trigger = 3;
-            }
-        }
-        else if (p_act == 0 && enemy_action == 1) {
-            // [룰 2] 플레이어 공격 vs 적 방어
-            if (p_pos == enemy_position) {
-                // 적이 방어 방향을 맞춤 -> 적은 데미지 50%만 입음
-                e_take_dmg = base_dmg / 2;
-                effect_trigger = 4;
-                // 50% 확률로 반격 성공 여부 결정
-                if (rand() % 2 == 0) {
-                    p_take_dmg = (int)(base_dmg * 1.5); // 플레이어 반격 당함 (150% 데미지)
-                    sprintf(log_damage, "적의 방어 성공! 데미지가 50%%로 반감되고 역습을 허용하여 플레이어가 150%% 반격 피해(%d)를 입음.", p_take_dmg);
-                    effect_trigger = 1;
-                }
-                else {
-                    sprintf(log_damage, "적이 성공적으로 가드했습니다. 데미지 50%% 경감(%d). 반격은 빗나갔습니다.", e_take_dmg);
-                }
-            }
-            else {
-                // 적이 방어 방향을 틀림 -> 가드 무너짐, 카운터 판정으로 적이 150% 데미지 받음
-                e_take_dmg = (int)(base_dmg * 1.5);
-                sprintf(log_damage, "방어 방향 예측 실패! 적의 가드가 깨지며 150%% 카운터 피해(%d)를 입혔습니다.", e_take_dmg);
-                effect_trigger = 2;
-            }
-        }
-        else if (p_act == 1 && enemy_action == 0) {
-            // [룰 3] 플레이어 방어 vs 적 공격
-            if (p_pos == enemy_position) {
-                // 플레이어가 가드 방향을 맞춤 -> 플레이어 데미지 50% 경감
-                p_take_dmg = base_dmg / 2;
-                effect_trigger = 4;
-                // 50% 확률로 반격 성공
-                if (rand() % 2 == 0) {
-                    e_take_dmg = (int)(base_dmg * 1.5); // 적에게 150% 반격 성공
-                    sprintf(log_damage, "방어 성공! 철벽 가드 후 번개 같은 반격으로 적에게 150%%의 피해(%d)를 돌려주었습니다.", e_take_dmg);
-                    effect_trigger = 2;
-                }
-                else {
-                    sprintf(log_damage, "가드 성공! 적의 공격력을 절반(%d)으로 줄였습니다.", p_take_dmg);
-                }
-            }
-            else {
-                // 플레이어가 가드 방향을 틀림 -> 플레이어가 150% 카운터 피해를 입음
-                p_take_dmg = (int)(base_dmg * 1.5);
-                sprintf(log_damage, "방어 방향 예측 실패! 무방비하게 노출되어 적에게 150%% 카운터 피해(%d)를 허용했습니다.", p_take_dmg);
-                effect_trigger = 1;
-            }
-        }
-        else {
-            // [룰 4] 둘 다 방어 태세를 취한 경우
-            sprintf(log_damage, "두 파이터 모두 숨을 고르며 방어 자세를 유지합니다. 아무 일도 일어나지 않았습니다.");
-        }
-
-        // 실제 체력 차감 연산
-        player_hp -= p_take_dmg;
-        enemy_hp -= e_take_dmg;
-        if (player_hp < 0) player_hp = 0;
-        if (enemy_hp < 0) enemy_hp = 0;
-
-        // 9. 타격 발생 위치에 ANSI Sequence를 사용하여 이펙트(*) 덮어쓰기 연출
-        COLOR_YELLOW();
-        if (effect_trigger == 1 || effect_trigger == 3) {
-            // 플레이어 피격 위치 (아스키 아트상의 대략적 좌표 9행 부근에 오버레이)
-            MOVE_CURSOR(9, 9);  printf("<💥CRASH!!>");
-            MOVE_CURSOR(10, 8); printf("* * * *");
-        }
-        if (effect_trigger == 2 || effect_trigger == 3) {
-            // 적 피격 위치 (아스키 아트상의 대략적 좌표 9행 부근 우측 오버레이)
-            MOVE_CURSOR(9, 47);  printf("<💥CRASH!!>");
-            MOVE_CURSOR(10, 46); printf("* * * *");
-        }
-        if (effect_trigger == 4) {
-            // 방어 스파크 이펙트 위치
-            MOVE_CURSOR(9, 28); printf("[🛡️GUARD]");
-        }
-        COLOR_RESET();
-
-        // 이펙트를 눈으로 확인할 수 있도록 콘솔 대기 시간을 강제 부여
-        // (Windows 콘솔 시각 연출용 빈 입력 버퍼 대기 대용 처리)
-        fflush(stdout);
-        Sleep(1000);
-    }
-
-    // 10. 게임 최종 결과 스크린 출력
-    CLEAR_SCREEN();
-    printf("===============================================================\n");
-    printf("                         전 투 종 료                           \n");
-    printf("===============================================================\n\n");
-
-    if (player_hp <= 0 && enemy_hp <= 0) {
-        COLOR_YELLOW();
-        printf(" [결과] 무승부! 두 파이터가 동시에 쓰러졌습니다.\n");
-    }
-    else if (enemy_hp <= 0) {
-        COLOR_BLUE();
-        printf(" [결과] ★ 플레이어 승리! ★\n 위대한 전사여, 적을 완벽하게 무찔렀습니다.\n");
-    }
-    else {
-        COLOR_RED();
-        printf(" [결과] 💀 적에게 패배했습니다. 💀\n 다시 수련하여 도전하십시오.\n");
-    }
-    COLOR_RESET();
-    printf("\n===============================================================\n");
+    // -------------------------------------------------------------------------
+    // [결과 출력 디스플레이]
+    // -------------------------------------------------------------------------
+    printf("==================================================================\n");
+    printf("[측정 완료 보고서]\n");
+    printf("==================================================================\n");
+    printf("1. 소모된 총 CPU 클록 틱 수 : %ld 틱\n", (long)total_ticks);
+    printf("2. 환산된 시간 (초/s)       : %.4f s\n", duration_seconds);
+    printf("3. 환산된 시간 (밀리초/ms)   : %.2f ms\n", duration_milliseconds);
+    printf("4. 환산된 시간 (마이크로초/us): %.2f us\n", duration_microseconds);
+    printf("5. 환산된 시간 (나노초/ns)   : %.2f ns\n", duration_nanoseconds);
+    printf("==================================================================\n");
+    printf("[초보자 핵심 요약]\n");
+    printf(" -> Windows 표준 <time.h>의 clock() 함수는 내부 해상도 한계로 인해\n");
+    printf("    마이크로/나노초 수치까지 숫자가 쪼개져 나오긴 하지만, 실제 정밀도는\n");
+    printf("    밀리초(ms) 단위 수준까지만 신뢰할 수 있음! (나노초 단위 뒤쪽은 사실상 0으로 채워짐)\n");
+    printf("==================================================================\n");
 
     return 0;
 }
