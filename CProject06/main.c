@@ -38,7 +38,8 @@
  * 폰트(글자) 색상을 변경하는 함수
  * @param code: 30-37 (기본), 90-97 (밝은 색)
  */
-void set_font_color(int code) {
+void set_font_color(int code) 
+{
     printf("\x1b[%dm", code);
 }
 
@@ -46,11 +47,13 @@ void set_font_color(int code) {
  * 배경 색상을 변경하는 함수
  * @param code: 40-47 (기본), 100-107 (밝은 색)
  */
-void set_bg_color(int code) {
+void set_bg_color(int code) 
+{
     printf("\x1b[%dm", code);
 }
 
-int main() {
+int main() 
+{
     // 예제 1: 밝은 파란색 글자 출력
     set_font_color(94);
     printf("이것은 Bright Blue 폰트임.\n");
@@ -65,12 +68,14 @@ int main() {
 
     // 예제 3: 반복문을 이용한 16색 폰트 테스트
     printf("\n--- 16색 폰트 테스트 ---\n");
-    for (int i = 30; i <= 37; i++) {
+    for (int i = 30; i <= 37; i++) 
+    {
         set_font_color(i);
         printf("Color %d ", i);
     }
     printf("\n");
-    for (int i = 90; i <= 97; i++) {
+    for (int i = 90; i <= 97; i++) 
+    {
         set_font_color(i);
         printf("Color %d ", i);
     }

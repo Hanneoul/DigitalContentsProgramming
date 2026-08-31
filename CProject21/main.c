@@ -60,7 +60,7 @@ int main()
     // 해석: "pAny 주소를 int*로 취급해서(캐스팅), 그 방의 내용을 읽어라(*)"
     printf("[VOID POINTER & CASTING]\n");
     printf("- Value from void* (as int)   : 0x%X\n", *(int*)pAny);
-
+    
     pAny = &cData; // 문자 주소를 담음 (가능)
     printf("- Value from void* (as char)  : %c\n", *(char*)pAny);
     printf("--------------------------------------------------\n\n");

@@ -21,18 +21,22 @@ char g_inputKey = 0;        // 눌린 키 저장용
 
 // --- [함수 선언부] ---
 // 1. 입력 단계: 지금 어떤 키가 눌렸는지만 판단함.
-void ProcessInput() {
+void ProcessInput() 
+{
     // _kbhit은 conio.h의 함수로, 키가 눌렸는지 즉시 확인(Non-blocking)
-    if (_kbhit()) {
+    if (_kbhit()) 
+    {
         g_inputKey = _getch(); // 전역 변수 g_inputKey에 저장
     }
-    else {
+    else 
+    {
         g_inputKey = 0;
     }
 }
 
 // 2. 업데이트 단계: 입력된 데이터에 따라 좌표 계산 및 로직 처리.
-void Update() {
+void Update() 
+{
     // 전역 변수 g_x, g_y를 수정함
     if (g_inputKey == 'w' || g_inputKey == 'W') g_y--;
     else if (g_inputKey == 's' || g_inputKey == 'S') g_y++;
@@ -46,7 +50,8 @@ void Update() {
 }
 
 // 3. 렌더링 단계: 현재 좌표 정보를 화면에 출력함.
-void Render() {
+void Render() 
+{
     system("cls"); // 화면 지우기
 
     printf("=== 게임루프 실습 (WASD 이동 / Q 종료) ===\n");
@@ -69,9 +74,11 @@ void Render() {
 }
 
 // --- [메인 함수] ---
-int main() {
+int main() 
+{
     // 메인 루프 구조가 매우 간결해짐
-    while (g_isRunning) {
+    while (g_isRunning) 
+    {
         ProcessInput(); // 입력받기
         Update();       // 계산하기
         Render();       // 그리기
